@@ -1,7 +1,12 @@
 import React from "react";
+import NavBar from "../components/NavBar";
 
 function LikePage() {
-  return <div>LikePage</div>;
+  return (
+    <>
+      <NavBar title="LikePage" />
+    </>
+  );
 }
 
 export default LikePage;
