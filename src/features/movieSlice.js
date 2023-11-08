@@ -11,7 +11,6 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     setMovieResult: (state, { payload }) => {
-      console.log(payload);
       state.movieResult = payload;
     },
     addLikedMovie: (state, { payload }) => {
