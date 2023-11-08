@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import ReactLoading from "react-loading";
 import Movie from "../components/Movie";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovieResult } from "../features/movieSlice";
 
 function HomePage() {
-  const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [sortMethod, setSortMethod] = useState("top");
+  const movies = useSelector((state) => state.movie.movieResult);
+  const dispatch = useDispatch();
 
   const fetchMovies = async () => {
     setLoading(true);
@@ -17,7 +20,7 @@ function HomePage() {
         "https://api.themoviedb.org/3/search/movie?api_key=26a145d058cf4d1b17cbf084ddebedec&language=fr-FR&query=" +
           searchValue
       );
-      setMovies(request.data.results);
+      dispatch(setMovieResult(request.data.results));
       setSearchValue("");
     } catch (error) {
       console.log(error);
@@ -82,13 +85,13 @@ function HomePage() {
       </div>
       <main className="flex flex-wrap items-center justify-center mt-6 gap-6">
         {movies
-          .sort((a, b) => {
-            if (sortMethod === "top") {
-              return b.vote_average - a.vote_average;
-            } else if (sortMethod === "flop") {
-              return a.vote_average - b.vote_average;
-            }
-          })
+          // .sort((a, b) => {
+          //   if (sortMethod === "top") {
+          //     return b.vote_average - a.vote_average;
+          //   } else if (sortMethod === "flop") {
+          //     return a.vote_average - b.vote_average;
+          //   }
+          // })
           .map((movie) => (
             <Movie movie={movie} key={movie.id} />
           ))}
